@@ -8,10 +8,15 @@ import {
 } from "react-router-dom";
 import Save from './save/Save';
 import Login from './login/Login';
+import Register from './register/Register';
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Register />,
+  },
+  {
+    path: "/login",
     element: <Login/>,
   },
   {
