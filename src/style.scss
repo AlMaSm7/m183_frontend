@@ -1,0 +1,29 @@
+.container {
+    margin: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.logout-button {
+    position: absolute !important;
+    margin: 2rem !important;
+    top: 0;
+    right: 0;
+}
+
+.speed-dial {
+    position: absolute !important;
+    margin: 2rem !important;
+    bottom: 0;
+    right: 0;
+}
