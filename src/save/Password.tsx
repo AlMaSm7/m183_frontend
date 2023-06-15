@@ -1,4 +1,4 @@
-import { IconButton, TableCell, TableRow } from "@mui/material";
+import { IconButton, TableCell, TableRow, Tooltip } from "@mui/material";
 import "../style.scss";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -30,17 +30,20 @@ const Password = ({ data, handleEditOpen }: any) => {
         >
           {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
         </IconButton>
-        <IconButton
-          onClick={() => {
-            navigator.clipboard.writeText(data.password);
-          }}
-        >
-          <ContentCopyIcon />
+        <Tooltip title="Coppy">
+          <IconButton
+            onClick={() => {
+              navigator.clipboard.writeText(data.password);
+            }}
+          >
+            <ContentCopyIcon />
         </IconButton>
+        </Tooltip>
       </TableCell>
       <TableCell align="left">{data.note}</TableCell>
       <TableCell align="left">
         <div>
+        <Tooltip title="Edit">
           <IconButton
             edge="end"
             aria-label="delete"
@@ -49,9 +52,12 @@ const Password = ({ data, handleEditOpen }: any) => {
           >
             <EditIcon />
           </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
           <IconButton edge="end" aria-label="delete">
             <DeleteIcon />
           </IconButton>
+          </Tooltip>
         </div>
       </TableCell>
     </TableRow>

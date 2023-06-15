@@ -8,6 +8,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
 import "../style.scss";
 import Password from "./Password";
@@ -75,7 +76,7 @@ const Save = () => {
   ]
 
   const actions = [
-    { icon: <AddIcon onClick={handleCreateOpen} />, name: "Add" },
+    { icon: <AddIcon onClick={handleCreateOpen} />, name: "Add password" },
     { icon: <SettingsIcon onClick={() => setOpenOptions(true)} />, name: "Options" },
   ];
 
@@ -86,6 +87,7 @@ const Save = () => {
   return (
     <div className="container">
       <h1>Save</h1>
+      <Tooltip title="Logout">
       <IconButton
         className="logout-button"
         color="primary"
@@ -95,6 +97,7 @@ const Save = () => {
       >
         <LogoutIcon sx={{ fontSize: 40, fontWeight: "large" }} />
       </IconButton>
+      </Tooltip>
 
       <Table sx={{ minWidth: 500, paddingRight: 20 }} aria-label="simple table">
         <TableHead>
