@@ -7,12 +7,12 @@ export enum ModeType {
     Edit = 'edit',
 }
 
-interface PasswordDialogProp {
-    handleClose: (value: string)=>void;
+interface OptionsProps {
+    handleClose: ()=>void;
     open: boolean;
 }
 
-const Options = ({handleClose, open}: PasswordDialogProp) => {
+const Options = ({handleClose, open}: OptionsProps) => {
     const [showPassword, setShowPassword] = useState(false)
     const [showRepeatPassword, SetShowRepeatPassword] = useState(false)
 

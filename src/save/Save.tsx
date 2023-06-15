@@ -13,6 +13,7 @@ import "../style.scss";
 import Password from "./Password";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router";
 import { useState } from "react";
@@ -46,12 +47,32 @@ const Save = () => {
 
   const navigate = useNavigate();
 
-  const data = {
-    username: "Silvan Dubach",
-    email: "silvan.dubach@gmail.com",
-    password: "nasdiji22e!",
-    note: "Test Notiz",
-  };
+  const dataSets = [
+    {
+      username: "Silvan Dubach",
+      email: "silvan.dubach@gmail.com",
+      password: "nasdiji22e!",
+      note: "Test Notiz",
+    },
+    {
+      username: "Yves Duber",
+      email: "yves.huber@gmail.com",
+      password: "isdjfij39!",
+      note: "Test Notiz",
+    },
+    {
+      username: "Aaron Hollenstein",
+      email: "aaron.hollenstein@gmail.com",
+      password: "daskfniwf!",
+      note: "Test Notiz",
+    },
+    {
+      username: "Alex Smolders",
+      email: "alex.smolders@gmail.com",
+      password: "askdjamdo!",
+      note: "Test Notiz",
+    },
+  ]
 
   const actions = [
     { icon: <AddIcon onClick={handleCreateOpen} />, name: "Add" },
@@ -85,8 +106,9 @@ const Save = () => {
             <TableCell align="left"></TableCell>
           </TableRow>
         </TableHead>
-        <Password data={data} handleEditOpen={handleEditOpen} />
-        <Password data={data} handleEditOpen={handleEditOpen} />
+        {dataSets.map((data, index) => (
+           <Password key={index} data={data} handleEditOpen={handleEditOpen} />
+        ))}
       </Table>
 
       <Box className="speed-dial" sx={{ height: 320, transform: "translateZ(0px)", flexGrow: 1 }}>

@@ -31,7 +31,7 @@ const PasswordDialog = ({handleClose, open, mode, formData}: PasswordDialogProp)
               id="outlined-adornment-password"
               type="text"
               label="Password"
-              value={formData.username}
+              value={formData?.username}
             />
           </FormControl>
           <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -43,7 +43,7 @@ const PasswordDialog = ({handleClose, open, mode, formData}: PasswordDialogProp)
                 type="text"
                 required
                 label="Email or Username"
-                value={formData.email}
+                value={formData?.email}
               />
             </FormControl>
           <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -65,7 +65,7 @@ const PasswordDialog = ({handleClose, open, mode, formData}: PasswordDialogProp)
                 </InputAdornment>
               }
               label="Password"
-              value={formData.password}
+              value={formData?.password}
             />
           </FormControl>
           <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -79,7 +79,7 @@ const PasswordDialog = ({handleClose, open, mode, formData}: PasswordDialogProp)
                 label="Email or Username"
                 multiline
                 rows={4}
-                value={formData.note}
+                value={formData?.note}
               />
             </FormControl>
           <Button sx={{width: 300, height: 56, marginTop: 1}} variant="contained" type="submit">

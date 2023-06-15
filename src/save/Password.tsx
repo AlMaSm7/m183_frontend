@@ -32,7 +32,7 @@ const Password = ({ data, handleEditOpen }: any) => {
         </IconButton>
         <IconButton
           onClick={() => {
-            navigator.clipboard.writeText("zasd");
+            navigator.clipboard.writeText(data.password);
           }}
         >
           <ContentCopyIcon />
