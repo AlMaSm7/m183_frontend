@@ -6,6 +6,7 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   OutlinedInput,
   TextField,
 } from "@mui/material";
@@ -15,6 +16,15 @@ import { useState } from "react";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState("");
+
+  const submitForm = () => {
+    console.log({
+      user,
+      password
+    });
+  }
 
   return (
     <div className="container">
@@ -31,6 +41,7 @@ function Login() {
                 type="text"
                 required
                 label="Email or Username"
+                onChange={(e) => {setUser(e.target.value)}}
               />
             </FormControl>
             <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -40,6 +51,7 @@ function Login() {
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
+                onChange={(e) => {setPassword(e.target.value)}}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -54,9 +66,10 @@ function Login() {
                 label="Password"
               />
             </FormControl>
-            <Button sx={{width: 300, height: 56, marginTop: 1}} variant="contained" type="submit">
+            <Button sx={{width: 300, height: 56, marginTop: 1}} variant="contained" type="submit" onClick={submitForm}>
               submit
             </Button>
+            <Link className="link" href="/">register</Link>
           </form>
         </CardContent>
       </Card>

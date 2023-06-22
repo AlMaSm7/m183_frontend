@@ -1,20 +1,30 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Button, CardContent, Dialog, DialogTitle, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
+import {
+  Button,
+  CardContent,
+  Dialog,
+  DialogTitle,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@mui/material";
 import { useState } from "react";
 
 export enum ModeType {
-    Create = 'create',
-    Edit = 'edit',
+  Create = "create",
+  Edit = "edit",
 }
 
 interface OptionsProps {
-    handleClose: ()=>void;
-    open: boolean;
+  handleClose: () => void;
+  open: boolean;
 }
 
-const Options = ({handleClose, open}: OptionsProps) => {
-    const [showPassword, setShowPassword] = useState(false)
-    const [showRepeatPassword, SetShowRepeatPassword] = useState(false)
+const Options = ({ handleClose, open }: OptionsProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, SetShowRepeatPassword] = useState(false);
 
   return (
     <Dialog onClose={handleClose} open={open}>
@@ -63,8 +73,12 @@ const Options = ({handleClose, open}: OptionsProps) => {
               label="Password"
             />
           </FormControl>
-          <Button sx={{width: 300, height: 56, marginTop: 1}} variant="contained" type="submit">
-              save
+          <Button
+            sx={{ width: 300, height: 56, marginTop: 1 }}
+            variant="contained"
+            type="submit"
+          >
+            save
           </Button>
         </form>
       </CardContent>

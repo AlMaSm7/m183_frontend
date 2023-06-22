@@ -6,6 +6,7 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   OutlinedInput,
 } from "@mui/material";
 import "../style.scss";
@@ -93,6 +94,7 @@ function Register() {
             >
               submit
             </Button>
+            <Link className="link" href="/login">login</Link>
           </form>
         </CardContent>
       </Card>

@@ -14,7 +14,7 @@ import "../style.scss";
 import Password from "./Password";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router";
 import { useState } from "react";
@@ -73,30 +73,33 @@ const Save = () => {
       password: "askdjamdo!",
       note: "Test Notiz",
     },
-  ]
+  ];
 
   const actions = [
     { icon: <AddIcon onClick={handleCreateOpen} />, name: "Add password" },
-    { icon: <SettingsIcon onClick={() => setOpenOptions(true)} />, name: "Options" },
+    {
+      icon: <SettingsIcon onClick={() => setOpenOptions(true)} />,
+      name: "Options",
+    },
   ];
 
   const logout = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   return (
     <div className="container">
       <h1>Save</h1>
       <Tooltip title="Logout">
-      <IconButton
-        className="logout-button"
-        color="primary"
-        aria-label="upload picture"
-        component="label"
-        onClick={logout}
-      >
-        <LogoutIcon sx={{ fontSize: 40, fontWeight: "large" }} />
-      </IconButton>
+        <IconButton
+          className="logout-button"
+          color="primary"
+          aria-label="upload picture"
+          component="label"
+          onClick={logout}
+        >
+          <LogoutIcon sx={{ fontSize: 40, fontWeight: "large" }} />
+        </IconButton>
       </Tooltip>
 
       <Table sx={{ minWidth: 500, paddingRight: 20 }} aria-label="simple table">
@@ -110,11 +113,14 @@ const Save = () => {
           </TableRow>
         </TableHead>
         {dataSets.map((data, index) => (
-           <Password key={index} data={data} handleEditOpen={handleEditOpen} />
+          <Password key={index} data={data} handleEditOpen={handleEditOpen} />
         ))}
       </Table>
 
-      <Box className="speed-dial" sx={{ height: 320, transform: "translateZ(0px)", flexGrow: 1 }}>
+      <Box
+        className="speed-dial"
+        sx={{ height: 320, transform: "translateZ(0px)", flexGrow: 1 }}
+      >
         <SpeedDial
           ariaLabel="SpeedDial basic example"
           sx={{ position: "absolute", bottom: 16, right: 16 }}
@@ -137,10 +143,7 @@ const Save = () => {
         formData={formData}
       />
 
-      <Options 
-      open={openOptions}
-      handleClose={handleCloseOptions}
-      ></Options>
+      <Options open={openOptions} handleClose={handleCloseOptions}></Options>
     </div>
   );
 };
