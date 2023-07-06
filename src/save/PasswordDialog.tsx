@@ -49,7 +49,7 @@ const PasswordDialog = ({
         email: formData.email,
         password: formData.password,
         note: formData.note,
-      }, { headers: {"Authorization" : `Bearer ${jwtToken}`}}).then(function (response) {
+      }, { headers: {"Authorization" : `Bearer ${jwtToken}`, "Content-Type": "application/json"}}).then(function (response) {
         navigate("/save");
       })
       .catch(function (error) {
@@ -61,7 +61,7 @@ const PasswordDialog = ({
         email: formData.email,
         password: formData.password,
         note: formData.note,
-      }, { headers: {"Authorization" : `Bearer ${jwtToken}`}}).then(function (response) {
+      }, { headers: {"Authorization" : `Bearer ${jwtToken}`, "Content-Type": "application/json"}}).then(function (response) {
         navigate("/save");
       })
       .catch(function (error) {

@@ -42,7 +42,7 @@ const Save = () => {
   console.log(jwtToken);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/records', { headers: {"Authorization" : `Bearer ${jwtToken}`}} ).then(function (response) {
+    axios.get('http://localhost:8000/api/records', { headers: {"Authorization" : `Bearer ${jwtToken}`, "Content-Type": "application/json"}}).then(function (response) {
       setData(response.data)
     })
     .catch(function (error) {

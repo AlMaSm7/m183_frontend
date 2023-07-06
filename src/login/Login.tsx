@@ -22,23 +22,49 @@ function Login() {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
 
-  const submitForm = () => {
+  const submitForm = (e: any) => {
     console.log({
       user,
-      password
+      password,
     });
-
-    axios.post('http://localhost:8000/api/auth/login', {
-      username: user,
-      password: password,
-    }).then(function (response) {
-      sessionStorage.setItem("jwt", response.data.JWT);
-      navigate("/save");
+    /*
+    fetch("http://localhost:8000/api/auth/login", {
+      method: "POST",
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: "asdf",
+        password: "asdf",
+      }),
     })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+      .then((r: any) => r.json())
+      .then((d: any) => console.log(d))
+      .catch((e) => console.log(e));
+    */
+    e.preventDefault();
+
+    axios
+      .post(
+        "http://localhost:8000/api/auth/login",
+        {
+          username: user,
+          password: password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then(function (response) {
+        console.log("=>", response.data);
+        sessionStorage.setItem("jwt", response.data.auth_token);
+        navigate("/save");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="container">
@@ -55,7 +81,9 @@ function Login() {
                 type="text"
                 required
                 label="Email or Username"
-                onChange={(e) => {setUser(e.target.value)}}
+                onChange={(e) => {
+                  setUser(e.target.value);
+                }}
               />
             </FormControl>
             <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -65,7 +93,9 @@ function Login() {
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
-                onChange={(e) => {setPassword(e.target.value)}}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -80,10 +110,17 @@ function Login() {
                 label="Password"
               />
             </FormControl>
-            <Button sx={{width: 300, height: 56, marginTop: 1}} variant="contained" type="submit" onClick={submitForm}>
+            <Button
+              sx={{ width: 300, height: 56, marginTop: 1 }}
+              variant="contained"
+              type="submit"
+              onClick={submitForm}
+            >
               submit
             </Button>
-            <Link className="link" href="/">register</Link>
+            <Link className="link" href="/">
+              register
+            </Link>
           </form>
         </CardContent>
       </Card>

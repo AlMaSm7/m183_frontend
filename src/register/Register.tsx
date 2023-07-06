@@ -25,7 +25,7 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const submitForm = () => {
+  const submitForm = (e: any) => {
     /*
     fetch("http://localhost:8000/api/auth/register", {
       method: "post",
@@ -39,24 +39,32 @@ function Register() {
         password: password,
       }),
     })
-      .then((r) => console.log(r))
+      .then((r) => r.json())
+      .then((d) => console.log(d))
       .catch((e) => console.log(e));
-
     */
+    e.preventDefault();
 
-    axios.post('http://localhost:8000/api/auth/register', {
-      username: username,
-      email: email,
-      password: password,
-    }).then(function (response) {
-      console.log("=>", response.data);
-      sessionStorage.setItem("jwt", response.data.JWT);
-      navigate("/save");
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
+    axios
+      .post(
+        "http://localhost:8000/api/auth/register",
+        {
+          username: username,
+          email: email,
+          password: password,
+        },
+        { 
+          headers: { "Content-Type": "application/json"} 
+        }
+      )
+      .then(function (response) {
+        console.log("=>", response.data);
+        sessionStorage.setItem("jwt", response.data.auth_token);
+        navigate("/save");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
