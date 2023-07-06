@@ -13,17 +13,32 @@ import {
 import "../style.scss";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [user, setUser] = useState("");
+  const navigate = useNavigate();
 
   const submitForm = () => {
     console.log({
       user,
       password
     });
+
+    axios.post('http://localhost:8000/api/auth/login', {
+      username: user,
+      password: password,
+    }).then(function (response) {
+      sessionStorage.setItem("jwt", response.data.JWT);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+    navigate("/save");
   }
 
   return (

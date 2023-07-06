@@ -10,7 +10,10 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
+import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useGetJWT } from "../useGetJWT";
 
 export enum ModeType {
   Create = "create",
@@ -22,6 +25,7 @@ interface PasswordDialogProp {
   open: boolean;
   mode: ModeType | undefined;
   formData: any;
+  setFormData: any;
 }
 
 const PasswordDialog = ({
@@ -29,9 +33,42 @@ const PasswordDialog = ({
   open,
   mode,
   formData,
+  setFormData
 }: PasswordDialogProp) => {
-  const [showPassword, setShowPassword] = useState(false);
   const modeIsCreate = mode === ModeType.Create;
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const jwtToken = useGetJWT();
+
+  const handleSubmit = () => {
+    console.log(formData);
+
+    if(modeIsCreate) {
+      axios.post('http://localhost:8000/records',{
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        note: formData.note,
+      }, { headers: {"Authorization" : `Bearer ${jwtToken}`}}).then(function (response) {
+        navigate("/save");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    } else {
+      axios.put('http://localhost:8000/records', {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        note: formData.note,
+      }, { headers: {"Authorization" : `Bearer ${jwtToken}`}}).then(function (response) {
+        navigate("/save");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  }
 
   return (
     <Dialog onClose={handleClose} open={open}>
@@ -47,8 +84,10 @@ const PasswordDialog = ({
             <OutlinedInput
               id="outlined-adornment-password"
               type="text"
-              label="Password"
-              value={formData?.username}
+              label="Username"
+              value={formData.username}
+              required
+              onChange={(e) => setFormData({...formData, username: (e.target.value)})}
             />
           </FormControl>
           <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -57,8 +96,9 @@ const PasswordDialog = ({
               id="outlined-adornment-password"
               type="text"
               required
-              label="Email or Username"
-              value={formData?.email}
+              label="Email"
+              value={formData.email}
+              onChange={(e) => setFormData({...formData, email: (e.target.value)})}
             />
           </FormControl>
           <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -68,6 +108,7 @@ const PasswordDialog = ({
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
+              required
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -80,7 +121,8 @@ const PasswordDialog = ({
                 </InputAdornment>
               }
               label="Password"
-              value={formData?.password}
+              value={formData.password}
+              onChange={(e) => setFormData({...formData, password: (e.target.value)})}
             />
           </FormControl>
           <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -88,17 +130,18 @@ const PasswordDialog = ({
             <OutlinedInput
               id="outlined-adornment-password"
               type="text"
-              required
-              label="Email or Username"
+              label="Note"
               multiline
               rows={4}
-              value={formData?.note}
+              value={formData.note}
+              onChange={(e) => setFormData({...formData, note: (e.target.value)})}
             />
           </FormControl>
           <Button
             sx={{ width: 300, height: 56, marginTop: 1 }}
             variant="contained"
             type="submit"
+            onClick={handleSubmit}
           >
             {modeIsCreate ? "add" : "edit"}
           </Button>

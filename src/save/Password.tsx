@@ -10,9 +10,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 const Password = ({ data, handleEditOpen }: any) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleDelete = () => {
-
-  }
+  const handleDelete = () => {};
 
   return (
     <TableRow
@@ -52,7 +50,11 @@ const Password = ({ data, handleEditOpen }: any) => {
               edge="end"
               aria-label="delete"
               sx={{ mr: 1 }}
-              onClick={() => handleEditOpen(data)}
+              onClick={() => {
+
+                handleEditOpen(data)
+                console.log("handle open", data);
+              }}
             >
               <EditIcon />
             </IconButton>

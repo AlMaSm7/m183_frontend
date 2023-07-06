@@ -12,10 +12,36 @@ import {
 import "../style.scss";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, SetShowRepeatPassword] = useState(false);
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const submitForm = () => {
+    console.log({
+      username,
+      email,
+      password
+    });
+
+    axios.post('http://localhost:8000/api/auth/register', {
+      username: username,
+      email: email,
+      password: password,
+    }).then(function () {
+      navigate("/login");
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
   return (
     <div className="container">
@@ -32,6 +58,7 @@ function Register() {
                 type="text"
                 required
                 label="Email or Username"
+                onChange={(e) => {setUsername(e.target.value)}}
               />
             </FormControl>
             <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -43,6 +70,7 @@ function Register() {
                 type="text"
                 required
                 label="Email or Username"
+                onChange={(e) => {setEmail(e.target.value)}}
               />
             </FormControl>
             <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -52,6 +80,7 @@ function Register() {
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
+                onChange={(e) => {setPassword(e.target.value)}}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -91,6 +120,7 @@ function Register() {
               sx={{ width: 300, height: 56, marginTop: 1 }}
               variant="contained"
               type="submit"
+              onClick={submitForm}
             >
               submit
             </Button>

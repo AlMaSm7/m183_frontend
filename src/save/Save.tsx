@@ -17,28 +17,56 @@ import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PasswordDialog, { ModeType } from "./PasswordDialog";
 import Options from "./Options";
+import axios from "axios";
+import { useGetJWT } from "../useGetJWT";
+
+interface dataProp {
+  username: string,
+  email: string,
+  password: string,
+  note: string,
+}
 
 const Save = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
   const [mode, setMode] = useState<ModeType>();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(null);
+  const [data, setData] = useState<dataProp[]>();
+  const jwtToken = useGetJWT();
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/auth/login', { headers: {"Authorization" : `Bearer ${jwtToken}`}} ).then(function (response) {
+      setData(response.data)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
+
+  useEffect(() => {
+    if(formData) {
+      console.log(formData);
+      
+      setOpenDialog(true);
+    }
+  }, [formData]);
 
   const handleCreateOpen = () => {
     setOpenDialog(true);
     setMode(ModeType.Create);
+    setFormData({} as any)
   };
 
-  const handleEditOpen = (formData: any) => {
-    setOpenDialog(true);
+  const handleEditOpen = (data: any) => {
     setMode(ModeType.Edit);
-    setFormData(formData);
+    setFormData(data);
   };
 
-  const handleCloseDialog = (value: string) => {
+  const handleCloseDialog = () => {
     setOpenDialog(false);
   };
 
@@ -47,33 +75,6 @@ const Save = () => {
   };
 
   const navigate = useNavigate();
-
-  const dataSets = [
-    {
-      username: "Silvan Dubach",
-      email: "silvan.dubach@gmail.com",
-      password: "nasdiji22e!",
-      note: "Test Notiz",
-    },
-    {
-      username: "Yves Duber",
-      email: "yves.huber@gmail.com",
-      password: "isdjfij39!",
-      note: "Test Notiz",
-    },
-    {
-      username: "Aaron Hollenstein",
-      email: "aaron.hollenstein@gmail.com",
-      password: "daskfniwf!",
-      note: "Test Notiz",
-    },
-    {
-      username: "Alex Smolders",
-      email: "alex.smolders@gmail.com",
-      password: "askdjamdo!",
-      note: "Test Notiz",
-    },
-  ];
 
   const actions = [
     { icon: <AddIcon onClick={handleCreateOpen} />, name: "Add password" },
@@ -112,7 +113,7 @@ const Save = () => {
             <TableCell align="left"></TableCell>
           </TableRow>
         </TableHead>
-        {dataSets.map((data, index) => (
+        {data?.map((data, index) => (
           <Password key={index} data={data} handleEditOpen={handleEditOpen} />
         ))}
       </Table>
@@ -136,13 +137,14 @@ const Save = () => {
         </SpeedDial>
       </Box>
 
-      <PasswordDialog
+      {formData && <PasswordDialog
         open={openDialog}
         handleClose={handleCloseDialog}
         mode={mode}
         formData={formData}
+        setFormData={setFormData}
       />
-
+      }
       <Options open={openOptions} handleClose={handleCloseOptions}></Options>
     </div>
   );
