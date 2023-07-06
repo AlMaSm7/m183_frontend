@@ -22,26 +22,42 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const submitForm = () => {
-    console.log({
-      username,
-      email,
-      password
-    });
+    /*
+    fetch("http://localhost:8000/api/auth/register", {
+      method: "post",
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        email: email,
+        password: password,
+      }),
+    })
+      .then((r) => console.log(r))
+      .catch((e) => console.log(e));
+
+    */
 
     axios.post('http://localhost:8000/api/auth/register', {
       username: username,
       email: email,
       password: password,
-    }).then(function () {
-      navigate("/login");
+    }).then(function (response) {
+      console.log("=>", response.data);
+      sessionStorage.setItem("jwt", response.data.JWT);
+      navigate("/save");
     })
     .catch(function (error) {
       console.log(error);
     });
-  }
+
+  };
 
   return (
     <div className="container">
@@ -58,7 +74,9 @@ function Register() {
                 type="text"
                 required
                 label="Email or Username"
-                onChange={(e) => {setUsername(e.target.value)}}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
               />
             </FormControl>
             <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -70,7 +88,9 @@ function Register() {
                 type="text"
                 required
                 label="Email or Username"
-                onChange={(e) => {setEmail(e.target.value)}}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
             </FormControl>
             <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
@@ -80,7 +100,9 @@ function Register() {
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
-                onChange={(e) => {setPassword(e.target.value)}}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -124,7 +146,9 @@ function Register() {
             >
               submit
             </Button>
-            <Link className="link" href="/login">login</Link>
+            <Link className="link" href="/login">
+              login
+            </Link>
           </form>
         </CardContent>
       </Card>

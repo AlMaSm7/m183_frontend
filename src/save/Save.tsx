@@ -22,6 +22,7 @@ import PasswordDialog, { ModeType } from "./PasswordDialog";
 import Options from "./Options";
 import axios from "axios";
 import { useGetJWT } from "../useGetJWT";
+import { log } from "console";
 
 interface dataProp {
   username: string,
@@ -38,8 +39,10 @@ const Save = () => {
   const [data, setData] = useState<dataProp[]>();
   const jwtToken = useGetJWT();
 
+  console.log(jwtToken);
+
   useEffect(() => {
-    axios.get('http://localhost:8000/api/auth/login', { headers: {"Authorization" : `Bearer ${jwtToken}`}} ).then(function (response) {
+    axios.get('http://localhost:8000/api/records', { headers: {"Authorization" : `Bearer ${jwtToken}`}} ).then(function (response) {
       setData(response.data)
     })
     .catch(function (error) {
@@ -85,6 +88,7 @@ const Save = () => {
   ];
 
   const logout = () => {
+    sessionStorage.setItem("jwt", "");
     navigate("/login");
   };
 

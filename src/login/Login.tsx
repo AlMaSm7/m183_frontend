@@ -33,12 +33,11 @@ function Login() {
       password: password,
     }).then(function (response) {
       sessionStorage.setItem("jwt", response.data.JWT);
+      navigate("/save");
     })
     .catch(function (error) {
       console.log(error);
     });
-    
-    navigate("/save");
   }
 
   return (

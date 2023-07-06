@@ -44,7 +44,7 @@ const PasswordDialog = ({
     console.log(formData);
 
     if(modeIsCreate) {
-      axios.post('http://localhost:8000/records',{
+      axios.post('http://localhost:8000/api/records',{
         username: formData.username,
         email: formData.email,
         password: formData.password,
@@ -56,7 +56,7 @@ const PasswordDialog = ({
         console.log(error);
       });
     } else {
-      axios.put('http://localhost:8000/records', {
+      axios.put('http://localhost:8000/api/records', {
         username: formData.username,
         email: formData.email,
         password: formData.password,

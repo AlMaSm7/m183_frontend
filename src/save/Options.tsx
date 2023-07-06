@@ -9,7 +9,9 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Snackbar,
 } from "@mui/material";
+import axios from "axios";
 import { useState } from "react";
 
 export enum ModeType {
@@ -24,7 +26,22 @@ interface OptionsProps {
 
 const Options = ({ handleClose, open }: OptionsProps) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showRepeatPassword, SetShowRepeatPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [snackBarOpen, setSnackbarOpen] = useState(false);
+
+  const handleSubmit = () => {
+    if (password === repeatPassword) {
+      axios
+        .post("http://localhost:8000/api/auth/login", {
+          password: password,
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
 
   return (
     <Dialog onClose={handleClose} open={open}>
@@ -32,12 +49,19 @@ const Options = ({ handleClose, open }: OptionsProps) => {
       <CardContent>
         <form className="login-form">
           <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
+            <Snackbar
+              open={snackBarOpen}
+              autoHideDuration={6000}
+              onClose={handleClose}
+              message="Password must match"
+            />
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
+              onChange={(e) => setPassword(e.target.value)}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -58,12 +82,13 @@ const Options = ({ handleClose, open }: OptionsProps) => {
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
+              onChange={(e) => setRepeatPassword(e.target.value)}
               type={showRepeatPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={() => SetShowRepeatPassword(!showRepeatPassword)}
+                    onClick={() => setShowRepeatPassword(!showRepeatPassword)}
                     edge="end"
                   >
                     {showRepeatPassword ? <VisibilityOff /> : <Visibility />}
@@ -77,6 +102,7 @@ const Options = ({ handleClose, open }: OptionsProps) => {
             sx={{ width: 300, height: 56, marginTop: 1 }}
             variant="contained"
             type="submit"
+            onClick={handleSubmit}
           >
             save
           </Button>
