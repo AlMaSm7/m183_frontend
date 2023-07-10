@@ -15,7 +15,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-function Register() {
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, SetShowRepeatPassword] = useState(false);
 
