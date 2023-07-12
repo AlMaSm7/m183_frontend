@@ -1,5 +1,9 @@
+export const useGetJWT = () => {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(";");
 
+    const firstCookie = cookies[0].trim();
+    const jwtToken = firstCookie.substring(4);
 
-export function useGetJWT() {
-    return sessionStorage.getItem("jwt");
-}
+    return jwtToken !== "" ? jwtToken : null;
+};

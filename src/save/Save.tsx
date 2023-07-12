@@ -14,7 +14,6 @@ import "../style.scss";
 import Password from "./Password";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SettingsIcon from "@mui/icons-material/Settings";
 import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
@@ -22,12 +21,15 @@ import PasswordDialog, {ModeType} from "./PasswordDialog";
 import Options from "./Options";
 import axios from "axios";
 import {useGetJWT} from "../useGetJWT";
-import {log} from "console";
+import {setCookieToNull} from "../helpers/setCookieToNull";
 
 interface dataProp {
+    recordId: number,
+    name: string,
     username: string,
     email: string,
     password: string,
+    url: string,
     note: string,
 }
 
@@ -38,9 +40,13 @@ const Save = () => {
     const [formData, setFormData] = useState(null);
     const [data, setData] = useState<dataProp[]>();
     const jwtToken = useGetJWT();
+    const headers = {
+        "Authorization": `Bearer ${jwtToken}`
+    };
 
     useEffect(() => {
-        getRecords()
+        setOpenDialog(false);
+        getRecords();
     }, []);
 
     useEffect(() => {
@@ -59,14 +65,17 @@ const Save = () => {
 
     const getRecords = () => {
         axios.get('http://localhost:8000/api/records', {
-            headers: {
-                "Authorization": `Bearer ${jwtToken}`
-            }
+            headers
         }).then(function (response) {
             setData(response.data)
-            console.log(response.data)
         }).catch(function (error) {
+            if (error.response.status == 403) {
+                console.log("JWT invalid!!!");
+                setCookieToNull();
+                navigate("/login");
+            } else {
                 console.log(error);
+            }
         });
     }
 
@@ -89,12 +98,12 @@ const Save = () => {
         {icon: <AddIcon onClick={handleCreateOpen}/>, name: "Add password"},
         {
             icon: <SettingsIcon onClick={() => setOpenOptions(true)}/>,
-            name: "Options",
+            name: "Change Password",
         },
     ];
 
     const logout = () => {
-        sessionStorage.setItem("jwt", "");
+        setCookieToNull();
         navigate("/login");
     };
 
@@ -116,9 +125,11 @@ const Save = () => {
             <Table sx={{minWidth: 500, paddingRight: 20}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                        <TableCell align="left">Name</TableCell>
                         <TableCell>Username</TableCell>
                         <TableCell align="left">Email</TableCell>
                         <TableCell align="left">Password</TableCell>
+                        <TableCell align="left">Url</TableCell>
                         <TableCell align="left">Note</TableCell>
                         <TableCell align="left"></TableCell>
                     </TableRow>

@@ -11,10 +11,6 @@ dist/
 .env.test.local
 .env.production.local
 
-# Ignore TypeScript build artifacts
-tsconfig.json
-tsconfig.*.json
-*.tsbuildinfo
 
 # Ignore npm/Yarn lock files
 package-lock.json
