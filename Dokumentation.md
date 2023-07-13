@@ -34,20 +34,23 @@ Mit dem Passwort Safe ist sollte es möglich sein Passwörter sicher zu speicher
 ## **Weitere Anforderungen**
 
 ###
-Das erste wo uns in den Sinn gekommen ist, ist der JWT token. In der Produktion ist es wichtig, dass der Token noch mit einem Private 
+- Das erste wo uns in den Sinn gekommen ist, ist der JWT token. In der Produktion ist es wichtig, dass der Token noch mit einem Private 
+- Der JWT wird in den Cookies gespeichert
 
 ## **Nicht erledigte Tasks**
--asd
--asdasd
+-
 
+---
+
+## **Arbeitsaufteilung**
+Wir haben die Arbeit in drei grobe Bereiche unterteil. Das Frontend für welches Silvan gröstenteils verantwortlich war. Das Backend welches gröstenteils von Alex entwickelt wurde und die Datenbank sowie docker-compose welches Aaron übernommen hat. Wir haben uns nicht strickt and dies Aufteilung gehalten, das heisst jeder hat bei allem einwenig mitgewirkt.
 
 ---
 
 ## **Reflexion**
 
 ### Silvan Dubach 
-
-###
+Ich habe in diesem Projekt mithilfe von React und der MUI library das Frontend gebaut. Generell bin ich gut voran gekommen bis es einige grössere Probleme mit den API requests gab. Es gab Probleme mit dem CORS. Diese kamen von der Seite des Backends des Projektes und konnten von Alex schlussendlich gelöste werden, jedoch hat und dies relativ viel Zeit gekostet. Eine weiteres hinderniss war das Alex einmal und Aaron zweimal aussvielen, was uns im Zeitplan zurücksetzte.
 
 
 ### Alex Smolders
