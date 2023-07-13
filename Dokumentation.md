@@ -51,6 +51,9 @@ Wir haben die Arbeit in drei grobe Bereiche unterteil. Das Frontend für welches
 
 ## **Reflexion**
 
+### Aaorn Holenstein
+Einen Passwort Manager zu erstellen war eine tolle Aufgabe, die mir auch Spass gemacht hat. Leider haben wir uns zum Teil zu hohe Ziele gesetzt und konnten diese dann nicht erfüllen. Am Anfang waren wir gut in der Zeit und kamen schnell voran, doch leider hatten wir einige Ausfälle aufgrund von Krankheit, was die Entwicklung behinderte. Sehr ungünstig war, wenn man genau auf ein Feature warten musste, um selbst weiterentwickeln zu können (z.B. Model Klassen, um den Service zu bauen). Ausserdem habe ich einmal vergessen meine Changes zu pushen, und Alex hatte dann die genau gleichen Klassen wie ich implementiert, weil er dachte, sie existieren noch nicht. Diese doppelte Arbeit hätte mit besserer Kommunikation verhindert werden können, ebenso die Wartezeiten. Was wir aber gut gemacht haben ist eine saubere Vorgehensweise, denn wir haben gut geplant und auch bereits bei der Datenbankmodellierung an die Features gedacht, die wir haben wollen. Dadurch mussten wir nur eine kleine Anpassung an der Datenbank machen und konnten dort zumindest Zeit sparen. Auch haben wir den Code gut reviewed und sind auch oft zusammengesessen, und haben den Code besprochen.
+
 ### Silvan Dubach
 Ich habe in diesem Projekt mithilfe von React und der MUI library das Frontend gebaut. Generell bin ich gut voran gekommen bis es einige grössere Probleme mit den API requests gab. Es gab Probleme mit dem CORS. Diese kamen von der Seite des Backends des Projektes und konnten von Alex schlussendlich gelöste werden, jedoch hat und dies relativ viel Zeit gekostet. Eine weiteres hinderniss war das Alex einmal und Aaron zweimal aussvielen, was uns im Zeitplan zurücksetzte.
 
