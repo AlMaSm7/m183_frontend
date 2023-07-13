@@ -59,7 +59,7 @@ const Options = ({handleClose, open}: OptionsProps) => {
                     handleCloseSnackBar();
                 })
                     .catch(function (error) {
-                        if (error.response.status == 403) {
+                        if (error.response.status === 403) {
                             console.log("JWT invalid!!!");
                             setCookieToNull();
                             navigate("/login");
@@ -96,6 +96,7 @@ const Options = ({handleClose, open}: OptionsProps) => {
                             id="outlined-adornment-password"
                             type={showPassword ? "text" : "password"}
                             onChange={(e) => setPassword(e.target.value)}
+                            required={true}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -118,6 +119,7 @@ const Options = ({handleClose, open}: OptionsProps) => {
                             id="outlined-adornment-password"
                             onChange={(e) => setRepeatPassword(e.target.value)}
                             type={showRepeatPassword ? "text" : "password"}
+                            required={true}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton

@@ -69,7 +69,7 @@ const Save = () => {
         }).then(function (response) {
             setData(response.data)
         }).catch(function (error) {
-            if (error.response.status == 403) {
+            if (error.response.status === 403) {
                 console.log("JWT invalid!!!");
                 setCookieToNull();
                 navigate("/login");

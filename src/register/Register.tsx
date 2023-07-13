@@ -43,7 +43,7 @@ const Register = () => {
             }).then(function (response) {
                 navigate("/save");
             }).catch(function (error) {
-                if (error.code != 403) {
+                if (error.code !== 403) {
                     console.log(error)
                 }
             });

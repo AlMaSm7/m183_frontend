@@ -15,6 +15,7 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router";
+import {useGetJWT} from "../useGetJWT";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +50,7 @@ const Login = () => {
             )
             .then(function (response) {
                 console.log("=>", response.data);
-                sessionStorage.setItem("jwt", response.data.auth_token);
+                document.cookie = "jwt=" + response.data?.auth_token + "; path=/;";
                 navigate("/save");
             })
             .catch(function (error) {
@@ -73,7 +74,7 @@ const Login = () => {
                                 <OutlinedInput
                                     id="outlined-adornment-password"
                                     type="text"
-                                    required
+                                    required={true}
                                     label="Email or Username"
                                     onChange={(e) => {
                                         setUser(e.target.value);
@@ -81,7 +82,7 @@ const Login = () => {
                                 />
                             </FormControl>
                             <FormControl fullWidth sx={{m: 1}} variant="outlined">
-                                <InputLabel htmlFor="outlined-adornment-password">
+                                <InputLabel htmlFor="outlined-adornment-password" required={true}>
                                     Password
                                 </InputLabel>
                                 <OutlinedInput
@@ -90,6 +91,7 @@ const Login = () => {
                                     onChange={(e) => {
                                         setPassword(e.target.value);
                                     }}
+                                    required={true}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton

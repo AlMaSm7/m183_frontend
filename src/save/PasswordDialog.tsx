@@ -66,7 +66,7 @@ const PasswordDialog = ({
                     window.location.reload();
                 })
                     .catch(function (error) {
-                        if (error.response.status == 403) {
+                        if (error.response.status === 403) {
                             console.log("JWT invalid!!!");
                             navigate("/login");
                         } else {
@@ -93,7 +93,7 @@ const PasswordDialog = ({
                    window.location.reload()
                 })
                     .catch(function (error) {
-                        if (error.response.status == 403) {
+                        if (error.response.status === 403) {
                             console.log("JWT invalid!!!");
                             navigate("/login");
                         } else {
@@ -128,7 +128,7 @@ const PasswordDialog = ({
                                 type="text"
                                 label="Name"
                                 value={formData.name}
-                                required
+                                required={true}
                                 onChange={(e) => setFormData({...formData, name: (e.target.value)})}
                                 endAdornment={<ErrorRounded sx={{color: 'grey'}}/>}
                             />
@@ -142,7 +142,7 @@ const PasswordDialog = ({
                                 type="text"
                                 label="Username"
                                 value={formData.username}
-                                required
+                                required={true}
                                 onChange={(e) => setFormData({...formData, username: (e.target.value)})}
                                 endAdornment={<ErrorRounded sx={{color: 'grey'}}/>}
                             />
@@ -164,7 +164,7 @@ const PasswordDialog = ({
                             <OutlinedInput
                                 id="outlined-adornment-password"
                                 type={showPassword ? "text" : "password"}
-                                required
+                                required={true}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
