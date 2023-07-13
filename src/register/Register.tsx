@@ -15,6 +15,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import {isPasswordComplex} from "../helpers/checkPasswordComplexity";
+import {isEmailValid} from "../helpers/checkEmailFormat";
 import {useGetJWT} from "../useGetJWT";
 
 const Register = () => {
@@ -28,6 +29,10 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
+
+    const [emailInvalid, setEmailInvalid] = useState(false);
+    const [userNameInvalid, setUserNameInvalid] = useState(false);
+    const [passwordInvalid, setPasswordInvalid] = useState(false);
 
     const navigate = useNavigate();
     const jwtToken = useGetJWT();
@@ -44,7 +49,7 @@ const Register = () => {
                 navigate("/save");
             }).catch(function (error) {
                 if (error.code !== 403) {
-                    console.log(error)
+                    console.log(error);
                 }
             });
         }
@@ -52,7 +57,18 @@ const Register = () => {
 
     const submitForm = (e: any) => {
         e.preventDefault(); // Prevent page refresh
-        if (repeatPassword === password) {
+        setEmailInvalid(!isEmailValid(email));
+        setUserNameInvalid(username === null || username === "");
+        setPasswordInvalid(password === "" || repeatPassword !== password);
+        if (emailInvalid) {
+            setSnackbarText("Not a valid email address");
+            setSnackbarVisible(true);
+        }
+        if (userNameInvalid) {
+            setSnackbarText("Please provide a username");
+            setSnackbarVisible(true);
+        }
+        if (!passwordInvalid && !userNameInvalid && !emailInvalid) {
             if (isPasswordComplex(password)) {
                 axios
                     .post(
@@ -81,8 +97,7 @@ const Register = () => {
                 setSnackbarVisible(true);
             }
         } else {
-            console.log("here")
-            setSnackbarText("Passwords do not match")
+            setSnackbarText("Please fill in all required fields correctly")
             setSnackbarVisible(true)
         }
     }
@@ -106,6 +121,7 @@ const Register = () => {
                                     id="outlined-adornment-password"
                                     type="text"
                                     label="Email or Username"
+                                    error = {userNameInvalid}
                                     onChange={(e) => {
                                         setUsername(e.target.value);
                                     }}
@@ -120,6 +136,7 @@ const Register = () => {
                                     id="outlined-adornment-password"
                                     type="text"
                                     label="Email or Username"
+                                    error = {emailInvalid}
                                     onChange={(e) => {
                                         setEmail(e.target.value);
                                     }}
@@ -147,6 +164,7 @@ const Register = () => {
                                             </IconButton>
                                         </InputAdornment>
                                     }
+                                    error={passwordInvalid}
                                     label="Password"
                                     required
                                 />
@@ -172,6 +190,7 @@ const Register = () => {
                                             </IconButton>
                                         </InputAdornment>
                                     }
+                                    error={passwordInvalid}
                                     label="Password"
                                     required
                                 />

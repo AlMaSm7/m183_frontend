@@ -12,52 +12,68 @@ import {
 } from "@mui/material";
 import "../style.scss";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router";
-import {useGetJWT} from "../useGetJWT";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
-    const [user, setUser] = useState("");
+    const [username, setUsername] = useState("");
     const navigate = useNavigate();
 
     const [isSnackbarVisible, setSnackbarVisible] = useState(false);
     const [snackbarText, setSnackbarText] = useState("")
 
+    const [userNameInvalid, setUserNameInvalid] = useState(false);
+    const [passwordInvalid, setPasswordInvalid] = useState(false);
+
+    let usernameEmpty = false;
+    let passwordEmpty = false;
+
     const handleClose = () => {
         setSnackbarVisible(false);
     }
 
-    const submitForm = (e: any) => {
-        console.log({
-            user,
-            password,
-        });
+    const submitForm = async (e: any) => {
         e.preventDefault();
 
-        axios
-            .post(
-                "http://localhost:8000/api/auth/login",
-                {
-                    username: user,
-                    password: password,
-                },
-                {
-                    headers: {"Content-Type": "application/json"},
-                }
-            )
-            .then(function (response) {
-                console.log("=>", response.data);
-                document.cookie = "jwt=" + response.data?.auth_token + "; path=/;";
-                navigate("/save");
-            })
-            .catch(function (error) {
-                console.log(error);
-                setSnackbarVisible(true);
-                setSnackbarText(error.response.data);
-            });
+        usernameEmpty = username === null || username === "";
+        passwordEmpty = password === null || password === "";
+        setUserNameInvalid(usernameEmpty);
+        setPasswordInvalid(passwordEmpty);
+        if (usernameEmpty) {
+            setSnackbarText("Please provide a username");
+            setSnackbarVisible(true);
+        }
+        if (passwordEmpty) {
+            setSnackbarText("Please provide a password");
+            setSnackbarVisible(true);
+        }
+
+        if (! usernameEmpty && !passwordEmpty) {
+            axios
+                .post(
+                    "http://localhost:8000/api/auth/login",
+                    {
+                        username: username,
+                        password: password,
+                    },
+                    {
+                        headers: {"Content-Type": "application/json"},
+                    }
+                )
+                .then(function (response) {
+                    console.log("=>", response.data);
+                    document.cookie = "jwt=" + response.data?.auth_token + "; path=/;";
+                    navigate("/save");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    setSnackbarVisible(true);
+                    setSnackbarText(error.response.data);
+                });
+        }
     };
 
     return (
@@ -69,15 +85,16 @@ const Login = () => {
                         <form className="login-form">
                             <FormControl fullWidth sx={{m: 1}} variant="outlined">
                                 <InputLabel htmlFor="outlined-adornment-password">
-                                    Email or Username
+                                    Username
                                 </InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
                                     type="text"
                                     required={true}
-                                    label="Email or Username"
+                                    label="Username"
+                                    error={userNameInvalid}
                                     onChange={(e) => {
-                                        setUser(e.target.value);
+                                        setUsername(e.target.value);
                                     }}
                                 />
                             </FormControl>
@@ -92,6 +109,7 @@ const Login = () => {
                                         setPassword(e.target.value);
                                     }}
                                     required={true}
+                                    error={passwordInvalid}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
